@@ -1,0 +1,29 @@
+
+Websocket url
+-------------
+wss://ws-feed.exchange.coinbase.com
+
+Request
+-------
+subscribe_request = {
+    "type": "subscribe",
+    "product_ids": [
+        "BTC-USD"
+    ],
+    "channels": ["matches"]
+}
+
+Response
+--------
+{
+   "type":"match",
+   "trade_id":513445762,
+   "maker_order_id":"29e70680-8653-452c-a872-feaef40889df",
+   "taker_order_id":"fcf58f4a-d337-4cc9-b713-337ec4feff7e",
+   "side":"sell",
+   "size":"0.0024724",
+   "price":"28433.16",
+   "product_id":"BTC-USD",
+   "sequence":57337859918,
+   "time":"2023-03-23T23:19:48.460851Z"
+}
