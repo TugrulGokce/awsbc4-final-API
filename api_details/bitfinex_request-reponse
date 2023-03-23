@@ -1,0 +1,36 @@
+
+Websocket url
+-------------
+wss://api-pub.bitfinex.com/ws/2
+
+
+Request
+-------
+subscribe_request = {
+    "event": "subscribe",
+    "channel": "trades",
+    "symbol": "tBTCUSD"
+}
+
+Response
+--------
+
+[
+  CHANNEL_ID,
+  <"te", "tu">,
+  'te' (Trade Execution) :
+    Bir işlem gerçekleştiğinde gönderilir ve yeni bir işlemle ilgili tüm bilgileri içerir.
+    Bu mesajda yer alan veriler, fiyat, miktar, zaman damgası ve işlemin kimliği (trade ID) gibi bilgileri içerir.
+  'tu' (Trade Update)
+    Önceden gerçekleşmiş bir işlemin bilgilerinde değişiklik olduğunda gönderilir.
+  [
+    ID,
+    MTS,
+    AMOUNT,
+    PRICE
+  ]
+]
+
+[3,"te",[1337126622,1679613366628,0.001,28340]]
+[3,"tu",[1337126622,1679613366628,0.001,28340]]
+
