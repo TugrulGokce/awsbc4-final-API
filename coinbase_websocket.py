@@ -1,10 +1,9 @@
 import asyncio
 import websockets
 import json
-from pprint import pprint
 
 
-async def subscribe():
+async def subscribe_coin_base():
     url = "wss://ws-feed.exchange.coinbase.com"
     async with websockets.connect(url) as ws:
         subscribe_request = {
@@ -24,4 +23,4 @@ async def subscribe():
 
 
 if __name__ == '__main__':
-    asyncio.get_event_loop().run_until_complete(subscribe())
+    asyncio.get_event_loop().run_until_complete(subscribe_coin_base())

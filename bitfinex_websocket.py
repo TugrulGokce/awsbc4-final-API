@@ -3,7 +3,7 @@ import websockets
 import json
 
 
-async def subscribe():
+async def subscribe_bit_finex():
     url = "wss://api-pub.bitfinex.com/ws/2"
     count = 0
     async with websockets.connect(url) as ws:
@@ -23,4 +23,5 @@ async def subscribe():
                     print(f"price = {data_list[2][3]}")
 
 
-asyncio.get_event_loop().run_until_complete(subscribe())
+if __name__ == '__main__':
+    asyncio.get_event_loop().run_until_complete(subscribe_bit_finex())
