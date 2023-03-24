@@ -3,6 +3,11 @@ Websocket url
 -------------
 wss://api.gateio.ws/ws/v4/
 
+Documentation
+-------------
+https://www.gate.io/docs/developers/apiv4/ws/zh_CN/#public-trades-channel
+
+
 Request
 -------
 {

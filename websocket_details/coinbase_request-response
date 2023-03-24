@@ -3,6 +3,10 @@ Websocket url
 -------------
 wss://ws-feed.exchange.coinbase.com
 
+Documentation
+-------------
+https://docs.cloud.coinbase.com/exchange/docs/websocket-channels#match
+
 Request
 -------
 subscribe_request = {
