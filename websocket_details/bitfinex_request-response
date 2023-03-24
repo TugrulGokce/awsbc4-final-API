@@ -20,7 +20,7 @@ Response
 --------
 
 [
-  CHANNEL_ID,
+  CHANNEL_ID, (Identification number assigned to the channel for the duration of this connection.)
   <"te", "tu">,
   'te' (Trade Execution) :
     Bir işlem gerçekleştiğinde gönderilir ve yeni bir işlemle ilgili tüm bilgileri içerir.
@@ -28,10 +28,10 @@ Response
   'tu' (Trade Update)
     Önceden gerçekleşmiş bir işlemin bilgilerinde değişiklik olduğunda gönderilir.
   [
-    ID,
-    MTS,
-    AMOUNT,
-    PRICE
+    ID, (Trade ID)
+    MTS, (millisecond time stamp)
+    AMOUNT, (Amount bought (positive) or sold (negative).)
+    PRICE (Price at which the trade was executed)
   ]
 ]
 
