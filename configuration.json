@@ -1,0 +1,34 @@
+{
+  "StockMarkets": {
+    "coinbase": {
+      "url": "wss://ws-feed.exchange.coinbase.com",
+      "request": {
+        "type": "subscribe",
+        "product_ids": [
+          "BTC-USD"
+        ],
+        "channels": [
+          "matches"
+        ]
+      }
+    },
+    "bitfinex": {
+      "url": "wss://api-pub.bitfinex.com/ws/2",
+      "request": {
+        "event": "subscribe",
+        "channel": "trades",
+        "symbol": "tBTCUSD"
+      }
+    },
+    "gateio": {
+      "url": "wss://api.gateio.ws/ws/v4/",
+      "request": {
+        "channel": "spot.trades",
+        "event": "subscribe",
+        "payload": [
+          "BTC_USDT"
+        ]
+      }
+    }
+  }
+}
