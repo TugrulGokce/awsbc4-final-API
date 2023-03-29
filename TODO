@@ -1,0 +1,79 @@
+
+
+
+1. Bir kripto icin websocket'e baglaninca, programı websocket'den artık veri almayıncaya kadar açık tutmamız gerekiyor.
+   Bu durumda şuan bitfinex, coinbase ve gateio olmak üzere 3 ayrı websocketden veri çekiyoruz.
+   Şuan sadece BTC-USD icin yapıyoruz. Eger ETH gibi baska coinler kullanacaksak, bunun icin ornegin gate.io websocket'i
+   icin yine aynı kodu farklı bir dosyada request'i ETH olacak sekilde duzenleyip calistirmak gerekiyor.
+   3 tane BTC icin 3 tane ETH icin, ... seklinde .py dosyaları uzuyor. Bu duruma nasıl cozebiliriz.
+
+2. Websocketlere baglanirken olusturdugumuz subscribe_request parametreleri farklı kaynaklar icin asagidaki tabloda ki gibi.
+   Burada eger ornegin bitfinex icin `tBTCUSD` degerinden farkli bir deger girersek, yanlis parametre ile websocket'e
+   subscribe olmus oluyoruz. Bu durumda websocket bize veri vermiyor.
+   Cozum olarak belki bunlarin hepsini dokumantasyondan okuyup bir dictionary'de key-value olarak tutabiliriz.
+
+  | bitfinex | coinbase | gate.io  |
+  |----------|----------|----------|
+  | tBTCUSD  | BTC-USD  | BTC_USDT |
+
+3. Gelen responseların icerisinden semboller asagidaki gibi geliyor.
+   Bunları veritabanına standartlastirip kaydetmek gerekiyor cunku lambda kullanırken ona gore filtreleme yapacagiz.
+   Belki burada parametre olarak kullanirsak, request icin gonderdigimiz degeri 'symbol' olarak kaydederiz.
+   (BTC-USD, ETH-USD, ...)
+
+  | bitfinex | coinbase | gate.io  |
+  |----------|----------|----------|
+  |     -    | BTC-USD  | BTC_USDT |
+
+4. Lambda'ya DynamoDB triggeri ekleyince, her veri geldiginde bunu `event` parametresi icerisinden, cloudwatch uzerinden
+   gorebiliyoruz. DynamoDB'ye her eklenen kayıtı bir tane JSON olarak gorebiliyoruz. Ornegin ;
+
+   trade_id = event['Records'][0]['dynamodb']['NewImage']['trade_id']['N'] (Partition key)
+   symbol = event['Records'][0]['dynamodb']['NewImage']['symbol']['S']
+   price = event['Records'][0]['dynamodb']['NewImage']['price']['S']
+   unix_timestamp = event['Records'][0]['dynamodb']['NewImage']['unix_timestamp']['N']
+   source = event['Records'][0]['dynamodb']['NewImage']['source']['S']
+
+   Burada eger sadece bir tablo ve o tabloya trigger olacak bir tane lambda function olacaksa, gelen veriler icerisinden
+   hangi kaynaktan geldigini belirten `source` parametresini neye gore cekip filtreleyecegiz.
+   (farkli kaynaklardan gelen aynı coin'in fiyat karsilastirmasi icin)
+
+   "Records":[
+      {
+         "eventID":"ff1e2911903aa1f8113014959f77d6e4",
+         "eventName":"INSERT",
+         "eventVersion":"1.1",
+         "eventSource":"aws:dynamodb",
+         "awsRegion":"eu-north-1",
+         "dynamodb":{
+            "ApproximateCreationDateTime":1680054306.0,
+            "Keys":{
+               "trade_id":{
+                  "N":"5373472979"
+               }
+            },
+            "NewImage":{
+               "symbol":{
+                  "S":"BTC_USDT"
+               },
+               "trade_id":{
+                  "N":"5373472979"
+               },
+               "price":{
+                  "S":"27364.3"
+               },
+               "source":{
+                  "S":"gate.io"
+               },
+               "unix_timestamp":{
+                  "N":"1680054305"
+               }
+            },
+            "SequenceNumber":"1288000000000016570335382",
+            "SizeBytes":87,
+            "StreamViewType":"NEW_AND_OLD_IMAGES"
+         },
+         "eventSourceARN":"arn:aws:dynamodb:eu-north-1:759444946621:table/coinTrade/stream/2023-03-28T23:33:51.084"
+      },
+   ]
+}
