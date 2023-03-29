@@ -30,14 +30,16 @@ async def subscribe_gate_io():
                 table.put_item(
                     Item={
                         'trade_id': data_list['result']['id'],
-                        'trade_pair_name': data_list['result']['currency_pair'],
+                        'symbol': data_list['result']['currency_pair'],
                         'price': data_list['result']['price'],
                         'unix_timestamp': data_list['time'],
+                        'source': 'gate.io'
                     },
                 )
                 logger.info(f"Item --> trade_id: {data_list['result']['id']} | "
                             f"trade_pair_name : {data_list['result']['currency_pair']} | "
                             f"price : {data_list['result']['price']} | "
+                            f"source : 'source': 'gate.io' | "
                             f"time : {data_list['time']} succesfully added to 'coinTrade' table")
 
 
