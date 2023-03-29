@@ -4,9 +4,6 @@ import json
 import boto3
 from loguru import logger
 
-# TODO bazı websocketlerde time olarak unixtimestamp var bazılarında düz tarih var hangi formatta db'ye kaydolacak
-# TODO gate.io icin unixtimestamp
-# TODO dynamodb de partition key ney'e göre olacak.
 
 dynamo_db_client = boto3.resource('dynamodb')
 table = dynamo_db_client.Table('coinTrade')
