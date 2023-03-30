@@ -1,18 +1,18 @@
-from Call_API import CallerAPI
-import asyncio
-import threading
-import multiprocessing
-import sys
+from db_write import DBWriter
+import uuid
+import time
+from utils import get_bitfinex_price, get_binance_price, get_gateio_price, get_coinbase_price
 
-caller = CallerAPI()
-smarket = str(sys.argv[1])
-if smarket in ["coinbase", "bitfinex", "gateio"]:
-    if asyncio.run(caller.are_apis_available()):
-        print("APIS are available.")
-        while True:
-            try:
-                asyncio.run(caller.start_writing(smarket))
-            except:
-                pass
-else:
-    raise ValueError(f"Invalid stock market. You can use {smarket}")
+print("Connecting to DB...")
+db = DBWriter()
+print("Connected to DB.")
+while True:
+    response = str(uuid.uuid1()), \
+        str(time.time())[:10], \
+        get_coinbase_price(), \
+        get_gateio_price(), \
+        get_binance_price(), \
+        get_bitfinex_price()
+    print("Response :", response)
+    db.write(response)
+    time.sleep(1)
