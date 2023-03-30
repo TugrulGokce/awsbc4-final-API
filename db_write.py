@@ -9,5 +9,10 @@ class DBWriter:
     def write(self, message):
         self.table.put_item(Item={'id': message[0],
                                   'ts': message[1],
-                                  'smarket': message[2],
-                                  'price': message[3]})
+                                  'coinbase_btc': message[2],
+                                  'gateio_btc': message[3],
+                                  'binance_btc': message[4],
+                                  'bitfinex_btc': message[5]})
+# TODO : Saniye bazında olacak.
+# TODO : timestamp integer casting.
+# TODO : tek satırda olacak.
