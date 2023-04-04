@@ -1,3 +1,0 @@
-websockets~=10.4
-boto3~=1.26.98
-loguru~=0.6.0
