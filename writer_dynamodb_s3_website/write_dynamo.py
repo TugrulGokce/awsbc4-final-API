@@ -13,8 +13,8 @@ def run_write_dynamodb():
             str(time.time())[:10], \
             get_coinbase_price(), \
             get_gateio_price(), \
-            get_binance_price(), \
             get_bitfinex_price()
+        # get_binance_price(), \
         print("Response :", response)
         db.write(response)
         time.sleep(1)

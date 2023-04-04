@@ -9,25 +9,25 @@ def run_read_dynamo_sns(diff_usd, sec):
 
         result = db_reader.get_last_min()
 
-        bitfinex_btc, gateio_btc, binance_btc, coinbase_btc, ts = [], [], [], [], []
+        bitfinex_btc, gateio_btc, coinbase_btc, ts = [], [], [], []
 
         for res in result:
             ts.append(res["ts"]["S"])
             bitfinex_btc.append(res["bitfinex_btc"]["S"])
             gateio_btc.append(res["gateio_btc"]["S"])
-            binance_btc.append(res["binance_btc"]["S"])
+            # binance_btc.append(res["binance_btc"]["S"])
             coinbase_btc.append(res["coinbase_btc"]["S"])
 
         df = pd.DataFrame({
             "ts": ts,
             "bitfinex_btc": bitfinex_btc,
             "gateio_btc": gateio_btc,
-            "binance_btc": binance_btc,
+            # "binance_btc": binance_btc,
             "coinbase_btc": coinbase_btc}).astype(float)
 
         # df = df.astype(float)
 
-        stock_features = ["bitfinex_btc", "gateio_btc", "binance_btc", "coinbase_btc"]
+        stock_features = ["bitfinex_btc", "gateio_btc", "coinbase_btc"]
         diff_serie = df[stock_features].max(axis=1) - df[stock_features].min(axis=1)
         max_idx = diff_serie.idxmax()
         max_smarket = df[stock_features].loc[max_idx].idxmax()

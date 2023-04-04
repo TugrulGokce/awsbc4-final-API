@@ -11,8 +11,8 @@ class DBWriter:
                                   'ts': message[1],
                                   'coinbase_btc': message[2],
                                   'gateio_btc': message[3],
-                                  'binance_btc': message[4],
-                                  'bitfinex_btc': message[5]})
+                                  # 'binance_btc': message[4],
+                                  'bitfinex_btc': message[4]})
 # TODO : Saniye bazında olacak.
 # TODO : timestamp integer casting.
 # TODO : tek satırda olacak.
