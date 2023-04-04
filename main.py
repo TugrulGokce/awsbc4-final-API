@@ -1,18 +1,9 @@
-from db_write import DBWriter
-import uuid
-import time
-from utils import get_bitfinex_price, get_binance_price, get_gateio_price, get_coinbase_price
+from writer_dynamodb_s3_website.write_dynamo import run_write_dynamodb
+from reader_dynamodb_notification.read_dynamo import run_read_dynamo_sns
+import threading
 
-print("Connecting to DB...")
-db = DBWriter()
-print("Connected to DB.")
-while True:
-    response = str(uuid.uuid1()), \
-        str(time.time())[:10], \
-        get_coinbase_price(), \
-        get_gateio_price(), \
-        get_binance_price(), \
-        get_bitfinex_price()
-    print("Response :", response)
-    db.write(response)
-    time.sleep(1)
+t_write = threading.Thread(target=run_write_dynamodb)
+t_read = threading.Thread(target=run_read_dynamo_sns, args=(sec, diff_usd))
+
+t_write.start()
+t_read.start()
