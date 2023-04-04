@@ -1,0 +1,36 @@
+
+Websocket url
+-------------
+wss://api.gateio.ws/ws/v4/
+
+Documentation
+-------------
+https://www.gate.io/docs/developers/apiv4/ws/zh_CN/#public-trades-channel
+
+
+Request
+-------
+{
+    "channel": "spot.trades",
+    "event": "subscribe",
+    "payload": ["BTC_USDT"]
+}
+
+Response
+--------
+{
+   "time":1679620071,
+   "time_ms":1679620071322,
+   "channel":"spot.trades",
+   "event":"update",
+   "result":{
+      "id":5346171438,
+      "create_time":1679620071,
+      "create_time_ms":"1679620071294.0",
+      "side":"sell",
+      "currency_pair":"BTC_USDT",
+      "amount":"0.064848",
+      "price":"28156.5"
+   }
+}
+
