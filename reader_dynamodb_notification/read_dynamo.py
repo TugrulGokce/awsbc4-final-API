@@ -1,6 +1,7 @@
 import pandas as pd
 import time
 from reader_dynamodb_notification.utils import DBReader
+from utils_sns import send_sms_to_sns_topic
 
 
 def run_read_dynamo_sns(diff_usd, sec):
@@ -41,9 +42,10 @@ def run_read_dynamo_sns(diff_usd, sec):
         diff_price = round(max_price - min_price, 2)
 
         if diff_price > diff_usd:
-            print(
-                f"Dear MSAHIN. BTC prices on {max_smarket} hits ${max_price} and on {min_smarket} hits ${min_price}."
-                f"There is an arbitrage opportunity with a difference of ${diff_price}!")
+            msg = f"Dear MSAHIN. BTC prices on {max_smarket} hits ${max_price} and on {min_smarket} hits ${min_price}. There is an arbitrage opportunity with a difference of ${diff_price}!"
+            print(msg)
+            send_sms_to_sns_topic(msg)
+
         else:
             print("there is no enough difference")
 
